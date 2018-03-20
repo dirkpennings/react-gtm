@@ -61,3 +61,8 @@ var getTags = exports.getTags = function getTags(_ref) {
     dataLayerTag: dataLayerTag
   };
 };
+
+exports.default = {
+  getDataLayer: getDataLayer,
+  getTags: getTags
+};

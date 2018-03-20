@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.initialize = exports.getScripts = exports.getDataScript = undefined;
+exports.getExistingDataLayer = exports.getExistingDataLayerName = exports.sendEvent = exports.initialize = exports.getScripts = exports.getDataScript = undefined;
 
 var _Snippets = require('./Snippets');
 
@@ -20,6 +20,7 @@ var getScripts = exports.getScripts = function getScripts(props) {
       iframeTag = _getTags.iframeTag,
       scriptTag = _getTags.scriptTag,
       dataLayerTag = _getTags.dataLayerTag;
+  // console.log('scriptTag', scriptTag)
 
   var noScript = function noScript() {
     var noscript = document.createElement('noscript');
@@ -65,7 +66,33 @@ var initialize = exports.initialize = function initialize(_ref) {
   if (dataLayer) {
     document.head.appendChild(gtm.dataScript);
   }
+  // console.log('gtm.script()', gtm.script())
 
   document.head.appendChild(gtm.script());
   document.body.appendChild(gtm.noScript());
+
+  window[_constants.KEY_DOM_DATA_LAYER_NAME] = dataLayerName;
+
+  return getExistingDataLayer();
+};
+
+var sendEvent = exports.sendEvent = function sendEvent(event) {
+  var dataLayer = getExistingDataLayer();
+
+  return dataLayer.push(event);
+};
+
+var getExistingDataLayerName = exports.getExistingDataLayerName = function getExistingDataLayerName() {
+  return window[_constants.KEY_DOM_DATA_LAYER_NAME];
+};
+
+var getExistingDataLayer = exports.getExistingDataLayer = function getExistingDataLayer() {
+  var currentDataLayerName = getExistingDataLayerName();
+  return window[currentDataLayerName];
+};
+
+exports.default = {
+  initialize: initialize,
+  sendEvent: sendEvent,
+  getExistingDataLayer: getExistingDataLayer
 };

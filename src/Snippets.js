@@ -49,3 +49,8 @@ export const getTags = ({ id, dataLayerName = DEFAULT_DL_NAME, dataLayer = null,
     dataLayerTag
   }
 };
+
+export default {
+  getDataLayer,
+  getTags,
+};

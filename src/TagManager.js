@@ -78,3 +78,9 @@ export const getExistingDataLayer = () => {
   const currentDataLayerName = getExistingDataLayerName();
   return window[currentDataLayerName];
 };
+
+export default {
+  initialize,
+  sendEvent,
+  getExistingDataLayer,
+};
