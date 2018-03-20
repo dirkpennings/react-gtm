@@ -13,10 +13,28 @@
     "git:add:all": "git add .",
     "git:commit:autobuild": "npm run build"
   },
-  "pre-push": [
-    "prepublish",
-    "git:add:all",
-    "git:commit:autobuild"
+  "devDependencies": {
+    "babel-cli": "6.24.1",
+    "babel-eslint": "7.2.3",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-react": "6.24.1",
+    "babel-register": "6.18.0",
+    "enzyme": "3.3.0",
+    "eslint": "3.9.0",
+    "jest": "19.0.2",
+    "pre-commit": "1.2.2",
+    "pre-push": "0.1.1",
+    "react": "16.2.0",
+    "react-addons-test-utils": "15.6.2",
+    "react-dom": "16.2.0",
+    "sinon": "1.14.1"
+  },
+  "peerDependencies": {
+    "react": "0.14.x || 16.2.0"
+  },
+  "pre-commit": [
+    "build",
+    "git:add:all"
   ],
   "repository": {
     "type": "git",
@@ -40,24 +58,6 @@
     "tag manager",
     "gtm"
   ],
-  "peerDependencies": {
-    "react": "0.14.x || 16.2.0"
-  },
-  "devDependencies": {
-    "babel-cli": "6.24.1",
-    "babel-eslint": "7.2.3",
-    "babel-preset-es2015": "6.24.1",
-    "babel-preset-react": "6.24.1",
-    "babel-register": "6.18.0",
-    "enzyme": "3.3.0",
-    "eslint": "3.9.0",
-    "jest": "19.0.2",
-    "pre-push": "0.1.1",
-    "react": "16.2.0",
-    "react-addons-test-utils": "15.6.2",
-    "react-dom": "16.2.0",
-    "sinon": "1.14.1"
-  },
   "jest": {
     "testRegex": "__tests__.*\\.spec.js$",
     "collectCoverage": true

@@ -41,9 +41,12 @@ var getTags = exports.getTags = function getTags(_ref) {
     (0, _warn2.default)('GTM Id is required');
   }
 
-  var iframeTag = '\n    <iframe \n      src="//www.googletagmanager.com/ns.html?id=' + id + '"\n      height="0" \n      width="0" \n      style="display:none;visibility:hidden" \n      id="tag-manager"\n    ></iframe>\n  ';
+  var gtm_auth = auth ? '&gtm_auth=' + auth : '';
+  var gtm_preview = auth ? '&gtm_preview=' + preview : '';
 
-  var scriptTag = '\n    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\':\n      new Date().getTime(),event:\'gtm.js\',' + JSON.stringify(events).slice(1, -1) + '});\n      var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!=\'dataLayer\'?\'&l=\'+l:\'\';\n      j.async=true;j.src=\'' + protocol + '://www.googletagmanager.com/gtm.js?id=\'+i+dl+\'&gtm_auth=' + auth + '&gtm_preview=' + preview + '&gtm_cookies_win=x\';\n      f.parentNode.insertBefore(j,f);\n    })(window,document,\'script\',\'' + dataLayerName + '\',\'' + id + '\');';
+  var iframeTag = '\n    <iframe \n      src="' + protocol + '//www.googletagmanager.com/ns.html?id=' + id + gtm_auth + gtm_preview + '"\n      height="0" \n      width="0" \n      style="display:none;visibility:hidden" \n      id="tag-manager"\n    ></iframe>\n  ';
+
+  var scriptTag = '\n    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\':\n      new Date().getTime(),event:\'gtm.js\',' + JSON.stringify(events).slice(1, -1) + '});\n      var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!=\'dataLayer\'?\'&l=\'+l:\'\';\n      j.async=true;j.src=\'' + protocol + '://www.googletagmanager.com/gtm.js?id=\'+i+dl+\'' + gtm_auth + gtm_preview + '&gtm_cookies_win=x\';\n      f.parentNode.insertBefore(j,f);\n    })(window,document,\'script\',\'' + dataLayerName + '\',\'' + id + '\');';
 
   // const scriptOld = `
   //   (function(w,d,s,l,i){w[l]=w[l]||[];
