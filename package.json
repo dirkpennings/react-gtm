@@ -23,7 +23,6 @@
     "eslint": "3.9.0",
     "jest": "19.0.2",
     "pre-commit": "1.2.2",
-    "pre-push": "0.1.1",
     "react": "16.2.0",
     "react-addons-test-utils": "15.6.2",
     "react-dom": "16.2.0",
