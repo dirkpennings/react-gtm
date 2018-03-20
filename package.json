@@ -9,10 +9,14 @@
     "jest:watch": "jest watch",
     "test": "npm run lint --ignore build && npm run jest",
     "build": "babel src -d dist --ignore src/__tests__",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "git:add:all": "git add .",
+    "git:commit:autobuild": "npm run build"
   },
   "pre-push": [
-    "prepublish && git add . && git commit -m 'rebuild'"
+    "prepublish",
+    "git:add:all",
+    "git:commit:autobuild"
   ],
   "repository": {
     "type": "git",
