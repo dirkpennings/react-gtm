@@ -12,7 +12,7 @@
     "prepublish": "npm run build"
   },
   "pre-push": [
-    "prepublish && git add . && git commit -m rebuild"
+    "prepublish && git add . && git commit -m 'rebuild'"
   ],
   "repository": {
     "type": "git",
