@@ -14,7 +14,7 @@ You can easily use custom dataLayer, multiple dataLayers and additional events.
 [npm](https://www.npmjs.com/):
 
 ```bash
-npm install Vadorequest/react-gtm#1.1.0 --save
+npm install Vadorequest/react-gtm#2.0.0 --save
 ```
 
 ## Staging environment
@@ -27,7 +27,19 @@ Otherwise, just ignore everything related to `staging` in the documentation, it'
 
 ## Usage
 
-Initializing GTM Module:
+### Properties
+
+|Value|Type|Required|Notes|
+|------|-----|-----|-----|
+|id| `String`| Yes | GTM id, must be something like `GTM-000000`.|
+|auth| `String`| No | When using a staging environment|
+|preview| `String`| No | When using a staging environment|
+|dataLayer| `Object`| No | Object that contains all of the information that you want to pass to Google Tag Manager.|
+|dataLayerName| `String`| No | Custom name for dataLayer object.|
+|events| `Object`| No | Additional events such as 'gtm.start': new Date().getTime(),event:'gtm.js'.|
+
+
+### Initializing GTM Module:
 
 ```jsx harmony
 import React from 'react'
@@ -172,15 +184,6 @@ const app = document.getElementById('app')
 ReactDOM.render(<Router routes={routes} />, app)
 ```
 
-|Value|Type|Required|Notes|
-|------|-----|-----|-----|
-|id| `String`| Yes | GTM id, must be something like `GTM-000000`.|
-|auth| `String`| No | When using a staging environment|
-|preview| `String`| No | When using a staging environment|
-|dataLayer| `Object`| No | Object that contains all of the information that you want to pass to Google Tag Manager.|
-|dataLayerName| `String`| No | Custom name for dataLayer object.|
-|events| `Object`| No | Additional events such as 'gtm.start': new Date().getTime(),event:'gtm.js'.|
-
 ## Dynamic events
 
 See official documentation for proper usage: https://developers.google.com/tag-manager/devguide#events
@@ -217,6 +220,12 @@ During the initialize, a global variable is created, storing the key used to sto
 
 You can also just use `window.dataLayer` if you're not using a custom 'dataLayerName'. (which is the default behavior)
 
-### Note:
+# Know issues
+
+- When using a custom `dataLayerName`, the test kinda fail (they've been deactivated for this particular use case)
+    I do not know if it's an issue with the tests itself (seems likely), or with the feature.
+    Nevertheless, if you use a custom `dataLayerName`, be aware of that and make sure it works properly.
+
+# Notes:
 
 - Disabling javascript in the browser can prevent the correct operation of this library if React is only being rendered on the client side.
