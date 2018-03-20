@@ -1,20 +1,20 @@
-import React from 'react'
-import TagManager from '../TagManager'
+import React from 'react';
+import { initialize } from '../TagManager';
 
 describe('TagManager', () => {
   it('should render tagmanager', () => {
-    TagManager.initialize({gtmId: 'GTM-000000'})
-    expect(window.dataLayer).toHaveLength(1)
-  })
+    initialize({ id: 'GTM-000000' });
+    expect(window.dataLayer).toHaveLength(1);
+  });
 
   it('should render datalayer', () => {
     const gtmArgs = {
-      gtmId: 'GTM-000000',
+      id: 'GTM-000000',
       dataLayer: {
         userInfo: 'userInfo'
       }
-    }
-    TagManager.initialize(gtmArgs)
-    expect(window.dataLayer).toHaveLength(1)
-  })
-})
+    };
+    initialize(gtmArgs);
+    expect(window.dataLayer).toHaveLength(1);
+  });
+});

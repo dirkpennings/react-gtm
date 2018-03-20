@@ -1,67 +1,71 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.initialize = exports.getScripts = exports.getDataScript = undefined;
+
 var _Snippets = require('./Snippets');
 
-var _Snippets2 = _interopRequireDefault(_Snippets);
+var _constants = require('./constants');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var TagManager = {
-  dataScript: function dataScript(dataLayer) {
-    var script = document.createElement('script');
-    script.innerHTML = dataLayer;
-    return script;
-  },
-  gtm: function gtm(args) {
-    var snippets = _Snippets2.default.tags(args);
-
-    var noScript = function noScript() {
-      var noscript = document.createElement('noscript');
-      noscript.innerHTML = snippets.iframe;
-      return noscript;
-    };
-
-    var script = function script() {
-      var script = document.createElement('script');
-      script.innerHTML = snippets.script;
-      return script;
-    };
-
-    var dataScript = this.dataScript(snippets.dataLayerVar);
-
-    return {
-      noScript: noScript,
-      script: script,
-      dataScript: dataScript
-    };
-  },
-  initialize: function initialize(_ref) {
-    var gtmId = _ref.gtmId,
-        _ref$events = _ref.events,
-        events = _ref$events === undefined ? {} : _ref$events,
-        dataLayer = _ref.dataLayer,
-        _ref$dataLayerName = _ref.dataLayerName,
-        dataLayerName = _ref$dataLayerName === undefined ? 'dataLayer' : _ref$dataLayerName;
-
-    var gtm = this.gtm({
-      id: gtmId,
-      events: events,
-      dataLayer: dataLayer || null,
-      dataLayerName: dataLayerName
-    });
-    if (dataLayer) document.head.appendChild(gtm.dataScript);
-    document.head.appendChild(gtm.script());
-    document.body.appendChild(gtm.noScript());
-  },
-  dataLayer: function dataLayer(_ref2) {
-    var _dataLayer = _ref2.dataLayer,
-        _ref2$dataLayerName = _ref2.dataLayerName,
-        dataLayerName = _ref2$dataLayerName === undefined ? 'dataLayer' : _ref2$dataLayerName;
-
-    var snippets = _Snippets2.default.dataLayer(_dataLayer, dataLayerName);
-    var dataScript = this.dataScript(snippets);
-    document.head.appendChild(dataScript);
-  }
+var getDataScript = exports.getDataScript = function getDataScript(dataLayer) {
+  var script = document.createElement('script');
+  script.innerHTML = dataLayer;
+  return script;
 };
 
-module.exports = TagManager;
+var getScripts = exports.getScripts = function getScripts(props) {
+  var _getTags = (0, _Snippets.getTags)(props),
+      iframeTag = _getTags.iframeTag,
+      scriptTag = _getTags.scriptTag,
+      dataLayerTag = _getTags.dataLayerTag;
+
+  var noScript = function noScript() {
+    var noscript = document.createElement('noscript');
+    noscript.innerHTML = iframeTag;
+    return noscript;
+  };
+
+  var script = function script() {
+    var script = document.createElement('script');
+    script.innerHTML = scriptTag;
+    return script;
+  };
+
+  var dataScript = getDataScript(dataLayerTag);
+
+  return {
+    noScript: noScript,
+    script: script,
+    dataScript: dataScript
+  };
+};
+
+var initialize = exports.initialize = function initialize(_ref) {
+  var id = _ref.id,
+      _ref$dataLayer = _ref.dataLayer,
+      dataLayer = _ref$dataLayer === undefined ? null : _ref$dataLayer,
+      _ref$dataLayerName = _ref.dataLayerName,
+      dataLayerName = _ref$dataLayerName === undefined ? _constants.DEFAULT_DL_NAME : _ref$dataLayerName,
+      auth = _ref.auth,
+      preview = _ref.preview,
+      _ref$events = _ref.events,
+      events = _ref$events === undefined ? {} : _ref$events;
+
+  var gtm = getScripts({
+    id: id,
+    events: events,
+    dataLayer: dataLayer,
+    dataLayerName: dataLayerName,
+    auth: auth,
+    preview: preview
+  });
+
+  if (dataLayer) {
+    document.head.appendChild(gtm.dataScript);
+  }
+
+  document.head.appendChild(gtm.script());
+  document.body.appendChild(gtm.noScript());
+};

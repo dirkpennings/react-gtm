@@ -1,50 +1,59 @@
-import Snippets from './Snippets'
+import { getTags } from './Snippets'
+import { DEFAULT_DL_NAME } from './constants';
 
-const TagManager = {
-  dataScript: function (dataLayer) {
-    const script = document.createElement('script')
-    script.innerHTML = dataLayer
+export const getDataScript = (dataLayer) => {
+  const script = document.createElement('script');
+  script.innerHTML = dataLayer;
+  return script
+};
+
+export const getScripts = (props) => {
+  const { iframeTag, scriptTag, dataLayerTag } = getTags(props);
+
+  const noScript = () => {
+    const noscript = document.createElement('noscript');
+    noscript.innerHTML = iframeTag;
+    return noscript
+  };
+
+  const script = () => {
+    const script = document.createElement('script');
+    script.innerHTML = scriptTag;
     return script
-  },
-  gtm: function (args) {
-    const snippets = Snippets.tags(args)
+  };
 
-    const noScript = () => {
-      const noscript = document.createElement('noscript')
-      noscript.innerHTML = snippets.iframe
-      return noscript
-    }
+  const dataScript = getDataScript(dataLayerTag);
 
-    const script = () => {
-      const script = document.createElement('script')
-      script.innerHTML = snippets.script
-      return script
-    }
-
-    const dataScript = this.dataScript(snippets.dataLayerVar)
-
-    return {
-      noScript,
-      script,
-      dataScript
-    }
-  },
-  initialize: function ({ gtmId, events = {}, dataLayer, dataLayerName = 'dataLayer' }) {
-    const gtm = this.gtm({
-      id: gtmId,
-      events: events,
-      dataLayer: dataLayer || null,
-      dataLayerName: dataLayerName
-    })
-    if (dataLayer) document.head.appendChild(gtm.dataScript)
-    document.head.appendChild(gtm.script())
-    document.body.appendChild(gtm.noScript())
-  },
-  dataLayer: function ({dataLayer, dataLayerName = 'dataLayer'}) {
-    const snippets = Snippets.dataLayer(dataLayer, dataLayerName)
-    const dataScript = this.dataScript(snippets)
-    document.head.appendChild(dataScript)
+  return {
+    noScript,
+    script,
+    dataScript
   }
-}
+};
 
-module.exports = TagManager
+export const initialize = (
+  {
+    id,
+    dataLayer = null,
+    dataLayerName = DEFAULT_DL_NAME,
+    auth,
+    preview,
+    events = {}
+  }
+) => {
+  const gtm = getScripts({
+    id,
+    events,
+    dataLayer,
+    dataLayerName,
+    auth,
+    preview,
+  });
+
+  if (dataLayer) {
+    document.head.appendChild(gtm.dataScript);
+  }
+
+  document.head.appendChild(gtm.script());
+  document.body.appendChild(gtm.noScript());
+};
