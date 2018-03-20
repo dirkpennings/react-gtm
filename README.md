@@ -14,14 +14,22 @@ You can easily use custom dataLayer, multiple dataLayers and additional events.
 [npm](https://www.npmjs.com/):
 
 ```bash
-npm install react-gtm-module --save
+npm install Vadorequest/react-gtm#1.1.0 --save
 ```
+
+## Staging environment
+
+GTM has released **Environments** quite recently, and they're very useful to test your setup in a particular environment.
+
+If you have a staging/preprod environment and would like to know more about it, see https://www.simoahava.com/analytics/better-qa-with-google-tag-manager-environments/
+
+Otherwise, just ignore everything related to `staging` in the documentation, it's optional anyway.
 
 ## Usage
 
 Initializing GTM Module:
 
-```js
+```jsx harmony
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Router from 'react-router'
@@ -31,7 +39,9 @@ import routes from './routes'
 import TagManager from 'react-gtm-module'
 
 const tagManagerArgs = {
-    gtmId: 'GTM-000000'
+    id: 'GTM-000000',
+    auth: 'KDJ8JDhbskdshzjz73kals', // Optional, see GTM => Admin => Environments, useful when using staging environment
+    preview: 'env-2' // Optional
 }
 
 TagManager.initialize(tagManagerArgs)
@@ -46,7 +56,7 @@ ReactDOM.render(<Router routes={routes} />, app)
 
 ### Custom dataLayer example:
 
-```js
+```jsx harmony
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Router from 'react-router'
@@ -56,7 +66,7 @@ import routes from './routes'
 import TagManager from 'react-gtm-module'
 
 const tagManagerArgs = {
-    gtmId: 'GTM-000000',
+    id: 'GTM-000000',
     dataLayer: {
         userId: '001',
         userProject: 'project'
@@ -78,7 +88,7 @@ If you need send multiple custom dataLayer you can initialize GTM Module on diff
 
 You can initialize it normally:
 
-```js
+```jsx harmony
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Router from 'react-router'
@@ -88,7 +98,7 @@ import routes from './routes'
 import TagManager from 'react-gtm-module'
 
 const tagManagerArgs = {
-    gtmId: 'GTM-000000',
+    id: 'GTM-000000',
     dataLayerName: 'PageDataLayer'
 }
 
@@ -102,7 +112,7 @@ ReactDOM.render(<Router routes={routes} />, app)
 
 And send your data in each page you want
 
-```js
+```jsx harmony
 import React from 'react'
 
 ...
@@ -135,11 +145,11 @@ export default Home
 ```
 
 
-## Events
+## Pre-defined Events
 
 ### Example:
 
-```js
+```jsx harmony
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Router from 'react-router'
@@ -149,7 +159,7 @@ import routes from './routes'
 import TagManager from 'react-gtm-module'
 
 const tagManagerArgs = {
-    gtmId: 'GTM-000000',
+    id: 'GTM-000000',
     events: {
         sendUserInfo: 'userInfo'
     }
@@ -164,11 +174,48 @@ ReactDOM.render(<Router routes={routes} />, app)
 
 |Value|Type|Required|Notes|
 |------|-----|-----|-----|
-|gtmId| `String`| Yes | GTM id, must be something like `GTM-000000`.|
+|id| `String`| Yes | GTM id, must be something like `GTM-000000`.|
+|auth| `String`| No | When using a staging environment|
+|preview| `String`| No | When using a staging environment|
 |dataLayer| `Object`| No | Object that contains all of the information that you want to pass to Google Tag Manager.|
 |dataLayerName| `String`| No | Custom name for dataLayer object.|
 |events| `Object`| No | Additional events such as 'gtm.start': new Date().getTime(),event:'gtm.js'.|
 
+## Dynamic events
+
+See official documentation for proper usage: https://developers.google.com/tag-manager/devguide#events
+
+
+```jsx harmony
+import React from 'react'
+
+import TagManager from 'react-gtm-module'
+
+const tagManagerArgs = {
+    id: 'GTM-000000'
+}
+
+TagManager.initialize(tagManagerArgs)
+
+// Later, in the same file or another file, you can use TagManager.sendEvent or just import sendEvent
+import {sendEvent} from 'react-gtm-module'
+
+<button onclick={() => sendEvent({'event': 'button1-click'})} />
+
+<button onclick={() => sendEvent({
+  'event': 'customizeCar',
+  'color': 'red',
+  'conversionValue': 50
+})} />
+```
+
+### Get the DataLayer from DOM
+
+Once you have initialized the GTM in your page, you can get the `dataLayer` from `TagManager.getExistingDataLayer` or `import { getExistingDataLayer } from 'react-gtm-module'`
+
+During the initialize, a global variable is created, storing the key used to store the dataLayer, which allows to retrieve it later on.
+
+You can also just use `window.dataLayer` if you're not using a custom 'dataLayerName'. (which is the default behavior)
 
 ### Note:
 
