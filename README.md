@@ -1,13 +1,21 @@
-[![Build Status](https://img.shields.io/travis/alinemorelli/react-gtm/master.svg?style=flat-square)](https://travis-ci.org/alinemorelli/react-gtm)
-[![npm version](https://img.shields.io/npm/v/react-gtm-module.svg?style=flat-square)](https://www.npmjs.com/package/react-gtm-module)
-[![npm downloads](https://img.shields.io/npm/dm/react-gtm-module.svg?style=flat-square)](https://www.npmjs.com/package/react-gtm-module)
+# react-gtm
 
-# react-gtm-module
-### React Google Tag Manager Module
+### React Google Tag Manager
 
-This is a Javascript module to [React](https://facebook.github.io/react/) based apps that implement Google Tag Manager. It is designed to use [GTM](https://developers.google.com/tag-manager/quickstart) snnipets.
+This is a Javascript module to [React](https://facebook.github.io/react/) based apps that implement Google Tag Manager. 
+It is designed to use [GTM](https://developers.google.com/tag-manager/quickstart) snnipets.
 
-You can easily use custom dataLayer, multiple dataLayers and additional events.
+You can easily use custom dataLayer, multiple dataLayers and additional events, as well as environments.
+
+## Fork
+
+This is a fork from https://github.com/alinemorelli/react-gtm with the following improvements (from https://github.com/alinemorelli/react-gtm/commit/d075e27a84970e5f7b6a0ecf38119331fbdfc877)
+
+- Environments (recent GTM feature)
+- Use of HTTPS by default (instead of HTTP)
+- Different way of using events (followed the official documentation), which doesn't recreate a new <script> tag at every call (see https://github.com/alinemorelli/react-gtm/issues/3)
+- Renamed the package from react-gtm-module to react-gtm
+- Added more tests
 
 ## Installation
 
@@ -48,7 +56,7 @@ import Router from 'react-router'
 import routes from './routes'
 
 ...
-import TagManager from 'react-gtm-module'
+import TagManager from 'react-gtm'
 
 const tagManagerArgs = {
     id: 'GTM-000000',
@@ -75,7 +83,7 @@ import Router from 'react-router'
 import routes from './routes'
 
 ...
-import TagManager from 'react-gtm-module'
+import TagManager from 'react-gtm'
 
 const tagManagerArgs = {
     id: 'GTM-000000',
@@ -107,7 +115,7 @@ import Router from 'react-router'
 import routes from './routes'
 
 ...
-import TagManager from 'react-gtm-module'
+import TagManager from 'react-gtm'
 
 const tagManagerArgs = {
     id: 'GTM-000000',
@@ -128,7 +136,7 @@ And send your data in each page you want
 import React from 'react'
 
 ...
-import TagManager from 'react-gtm-module'
+import TagManager from 'react-gtm'
 
 const tagManagerArgs = {
     dataLayer: {
@@ -168,7 +176,7 @@ import Router from 'react-router'
 import routes from './routes'
 
 ...
-import TagManager from 'react-gtm-module'
+import TagManager from 'react-gtm'
 
 const tagManagerArgs = {
     id: 'GTM-000000',
@@ -192,7 +200,7 @@ See official documentation for proper usage: https://developers.google.com/tag-m
 ```jsx harmony
 import React from 'react'
 
-import TagManager from 'react-gtm-module'
+import TagManager from 'react-gtm'
 
 const tagManagerArgs = {
     id: 'GTM-000000'
@@ -201,7 +209,7 @@ const tagManagerArgs = {
 TagManager.initialize(tagManagerArgs)
 
 // Later, in the same file or another file, you can use TagManager.sendEvent or just import sendEvent
-import {sendEvent} from 'react-gtm-module'
+import {sendEvent} from 'react-gtm'
 
 <button onclick={() => sendEvent({'event': 'button1-click'})} />
 
@@ -214,7 +222,7 @@ import {sendEvent} from 'react-gtm-module'
 
 ### Get the DataLayer from DOM
 
-Once you have initialized the GTM in your page, you can get the `dataLayer` from `TagManager.getExistingDataLayer` or `import { getExistingDataLayer } from 'react-gtm-module'`
+Once you have initialized the GTM in your page, you can get the `dataLayer` from `TagManager.getExistingDataLayer` or `import { getExistingDataLayer } from 'react-gtm'`
 
 During the initialize, a global variable is created, storing the key used to store the dataLayer, which allows to retrieve it later on.
 
