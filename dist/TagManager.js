@@ -72,8 +72,6 @@ var initialize = exports.initialize = function initialize(_ref) {
   document.body.appendChild(gtm.noScript());
 
   window[_constants.KEY_DOM_DATA_LAYER_NAME] = dataLayerName;
-
-  return getExistingDataLayer();
 };
 
 var sendEvent = exports.sendEvent = function sendEvent(event) {
