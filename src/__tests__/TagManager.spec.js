@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { initialize, sendEvent } from '../TagManager';
+import { initialize, sendEvent, getExistingDataLayer } from '../TagManager';
 import { DEFAULT_DL_NAME, KEY_DOM_DATA_LAYER_NAME } from './../constants';
 
 describe('TagManager - with default data layer name', () => {
@@ -39,17 +39,6 @@ describe('TagManager - with default data layer name', () => {
     expect(window.dataLayer).toHaveLength(1);
   });
 
-  it('should render datalayer and return newly created dataLayer', () => {
-    const gtmArgs = {
-      id: 'GTM-000000',
-      dataLayer: {
-        userInfo: 'userInfo'
-      }
-    };
-    const createdDataLayer = initialize(gtmArgs);
-    expect(window.dataLayer).toEqual(createdDataLayer)
-  });
-
   it('should add events to window.dataLayer (using helper)', () => {
     const gtmArgs = {
       id: 'GTM-000000',
@@ -57,7 +46,7 @@ describe('TagManager - with default data layer name', () => {
         userInfo: 'userInfo'
       }
     };
-    const createdDataLayer = initialize(gtmArgs);
+    initialize(gtmArgs);
     const eventResult = sendEvent({'event': 'eventName'});
     expect(window.dataLayer).toHaveLength(2); // TODO This is bad testing
   });
@@ -69,8 +58,8 @@ describe('TagManager - with default data layer name', () => {
         userInfo: 'userInfo'
       }
     };
-    const createdDataLayer = initialize(gtmArgs);
-    const eventResult = createdDataLayer.push({'event': 'eventName'});
+    initialize(gtmArgs);
+    const eventResult = getExistingDataLayer().push({'event': 'eventName'});
     expect(window.dataLayer).toHaveLength(3); // TODO This is bad testing
   });
 });
@@ -111,19 +100,6 @@ describe('TagManager - with custom data layer name', () => {
   //   initialize(gtmArgs);
   //   expect(window[dataLayerName]).toHaveLength(1);
   // });
-
-  it('should render datalayer and return newly created dataLayer', () => {
-    const gtmArgs = {
-      id: 'GTM-000000',
-      dataLayerName,
-      dataLayer: {
-        userInfo: 'userInfo'
-      }
-    };
-    const createdDataLayer = initialize(gtmArgs);
-    console.log(createdDataLayer)
-    expect(window[dataLayerName]).toEqual(createdDataLayer)
-  });
 });
 
 

@@ -60,8 +60,6 @@ export const initialize = (
   document.body.appendChild(gtm.noScript());
 
   window[KEY_DOM_DATA_LAYER_NAME] = dataLayerName;
-
-  return getExistingDataLayer();
 };
 
 export const sendEvent = (event) => {
