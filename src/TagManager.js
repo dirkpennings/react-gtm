@@ -1,5 +1,5 @@
 import { getTags } from './Snippets'
-import { DEFAULT_DL_NAME } from './constants';
+import { DEFAULT_DL_NAME, KEY_DOM_DATA_LAYER_NAME } from './constants';
 
 export const getDataScript = (dataLayer) => {
   const script = document.createElement('script');
@@ -9,6 +9,7 @@ export const getDataScript = (dataLayer) => {
 
 export const getScripts = (props) => {
   const { iframeTag, scriptTag, dataLayerTag } = getTags(props);
+  // console.log('scriptTag', scriptTag)
 
   const noScript = () => {
     const noscript = document.createElement('noscript');
@@ -53,7 +54,27 @@ export const initialize = (
   if (dataLayer) {
     document.head.appendChild(gtm.dataScript);
   }
+  // console.log('gtm.script()', gtm.script())
 
   document.head.appendChild(gtm.script());
   document.body.appendChild(gtm.noScript());
+
+  window[KEY_DOM_DATA_LAYER_NAME] = dataLayerName;
+
+  return getExistingDataLayer();
+};
+
+export const sendEvent = (event) => {
+  const dataLayer = getExistingDataLayer();
+
+  return dataLayer.push(event);
+};
+
+export const getExistingDataLayerName = () => {
+  return window[KEY_DOM_DATA_LAYER_NAME]
+};
+
+export const getExistingDataLayer = () => {
+  const currentDataLayerName = getExistingDataLayerName();
+  return window[currentDataLayerName];
 };

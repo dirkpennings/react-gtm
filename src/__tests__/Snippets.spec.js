@@ -17,7 +17,7 @@ describe('Snippets', () => {
     props = { dataLayer: { name: 'test' } };
     const dataLayerName = 'dataLayer';
     snippets = getDataLayer(dataLayerName, props);
-    console.log(snippets);
+    // console.log(snippets);
     expect(snippets).toContain('{"name":"test"}');
   });
 
