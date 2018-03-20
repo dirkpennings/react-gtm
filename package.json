@@ -1,7 +1,7 @@
 {
   "name": "react-gtm-module",
-  "version": "1.0.7",
-  "description": "React Google Tag Manager Module",
+  "version": "1.1.0",
+  "description": "React Google Tag Manager Module, forked from https://github.com/alinemorelli/react-gtm",
   "main": "dist/index.js",
   "scripts": {
     "lint": "eslint .",
@@ -12,16 +12,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alinemorelli/react-gtm"
+    "url": "https://github.com/vadorequest/react-gtm"
   },
   "author": {
-    "name": "Aline Morelli",
-    "email": "aline.morelliw@gmail.com",
-    "url": "https://github.com/alinemorelli"
+    "name": "Vadorequest",
+    "email": "vadorequest@example.com",
+    "url": "https://github.com/vadorequest"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/alinemorelli/react-gtm/issues"
+    "url": "https://github.com/vadorequest/react-gtm/issues"
   },
   "homepage": "",
   "keywords": [
@@ -33,27 +33,27 @@
     "gtm"
   ],
   "peerDependencies": {
-    "react": "0.14.x || ^16.2.0"
+    "react": "0.14.x || 16.2.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-eslint": "^7.2.3",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
+    "babel-cli": "6.24.1",
+    "babel-eslint": "7.2.3",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-react": "6.24.1",
     "babel-register": "6.18.0",
-    "enzyme": "^3.3.0",
-    "eslint": "^3.9.0",
-    "jest": "^19.0.2",
-    "react": "^16.2.0",
-    "react-addons-test-utils": "^15.6.2",
-    "react-dom": "^16.2.0",
-    "sinon": "^1.14.1"
+    "enzyme": "3.3.0",
+    "eslint": "3.9.0",
+    "jest": "19.0.2",
+    "react": "16.2.0",
+    "react-addons-test-utils": "15.6.2",
+    "react-dom": "16.2.0",
+    "sinon": "1.14.1"
   },
   "jest": {
     "testRegex": "__tests__.*\\.spec.js$",
     "collectCoverage": true
   },
   "dependencies": {
-    "jest-cli": "^21.2.1"
+    "jest-cli": "21.2.1"
   }
 }
